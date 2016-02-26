@@ -3,3 +3,8 @@ module.exports = function (app){
 		res.render('index', {title : "Hello World"})
 	})
 }
+
+ // routing for landing page
+	//app.get('/', function(req, res) {
+ // res.sendFile(__dirname + '/views/landing.html');
+//});
