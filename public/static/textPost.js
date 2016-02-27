@@ -22,7 +22,6 @@ $(document).ready(function() {
     $("div#submit-btn").click(function() {
         var msgContent = $("#vmsg").val();
         displayData(msgContent);
-        console.log("test");
     });
 
 
