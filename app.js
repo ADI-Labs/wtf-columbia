@@ -3,7 +3,14 @@ var path = require('path');
 var app = express();
 var http = require('http');
 var server = http.createServer(app);
-var config = require('./config/config')
+var config = require('./config/config');
+var mongoose = require ('mongoose');
+var newUser = require('./scripts/create_user');
+
+//sets up connection to mongodb data base for user logins
+mongoose.connect('mongodb://wtfcuuser:wtfcu@ds019628.mlab.com:19628/wtfcu');
+
+newUser();
 
 server.listen(config.port);
 app.set('views', path.join(__dirname, 'public/views'));
@@ -15,3 +22,4 @@ require('./routes/routes')(app)
 console.log("*****************************");
 console.log("* App running at port: " + config.port + " *");
 console.log("*****************************");
+

@@ -1,6 +1,4 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds019628.mlab.com:19628/wtfcu'); 
-
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema ({
@@ -8,9 +6,9 @@ var userSchema = new Schema ({
 	email_id: { type: String, required: true, unique: true},
 	username: { type: String, required: true, unique: true},
 	password: {type: String, required: true},
-	admin: boolean,
-	created_at: Date,
-	updated_at: Date,
+	admin: Boolean,
+	// created_at: Date,
+	// updated_at: Date,
 	post_id: Array
 })
 
@@ -21,27 +19,26 @@ userSchema.methods.makeAdmin = function()
 	return this.admin;
 };
 
-userSchema.methods.addPostId = function(int postID)
+userSchema.methods.addPostId = function(postID)
 {
 	post_id.push(postID);
-
 	return post_id;
 };
 
-userSchema.pre('save', function(next) 
-{
-  // get the current date
-  var currentDate = new Date();
+// userSchema.pre('save', function(next) 
+// {
+//   // get the current date
+//   var currentDate = new Date();
   
-  // change the updated_at field to current date
-  this.updated_at = currentDate;
+//   // change the updated_at field to current date
+//   this.updated_at = currentDate;
 
-  // if created_at doesn't exist, add to that field
-  if (!this.created_at)
-    this.created_at = currentDate;
+//   // if created_at doesn't exist, add to that field
+//   if (!this.created_at)
+//     this.created_at = currentDate;
 
-  next();
-});
+//   next();
+// });
 
 // userSchema.methods.updatedDate = function(int postID){
 	
