@@ -2,23 +2,21 @@
 var path = require('path');
 var bodyParser = require('body-parser');
 
-var Post = require('../public/models/post');
+var Post = require('../scripts/post');
 
 module.exports = function (app){
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 	
-	
 	app.get('/', function (req, res) {
-		res.render('index', {title : "Hello World"})
+		res.render('basicUI', {title : "Hello World"})
 	});
 
 	app.get('/basicUI', function(req, res) {
   		res.sendFile(path.join(__dirname, '../public/views/basicUI.html'))
 	});
 
-	app.post('/newUser', function(req, res){
+	app.post('/newPost', function(req, res){
 		console.log('POST /');
 		console.dir(req.body);
 
@@ -27,8 +25,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 		var newContent = req.body.content;
 		var newDisplay = req.body.display;
 		var newScore = req.body.score;
-		//})
-
 
 		var newMsg = new Post({
     		postID: newPostID,
@@ -41,7 +37,5 @@ app.use(bodyParser.urlencoded({ extended: true }));
     		if (err) throw err;
     		console.log('User saved!');
     	});
-
 	});
-
 }
