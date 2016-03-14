@@ -7,16 +7,16 @@ var postSchema = new Schema({
 	display: Boolean,
 	score: Number
 });
-/*
-postSchema.methods.upvote() = function() {
+
+postSchema.methods.upvote = function() {
 	this.score++;
 	return this.score;
 };
 
-postSchema.methods.downvote() = function() {
+postSchema.methods.downvote = function() {
 	this.score--;
 	return this.score;
-}*/
+}
 
 var Post = mongoose.model('Post', postSchema);
 

@@ -4,7 +4,6 @@ $(document).ready(function() {
     console.log("test");
     $("div#form1").append(
         $("<h3/>").text("Submit Post"), $("<p/>").text("Fill out the form"), $("<form/>", {
-            
         }).append(
             $("<textarea/>", {
                 rows: '5px',
@@ -21,20 +20,33 @@ $(document).ready(function() {
 
     	var msgContent = $("#vmsg").val();
 
-		var newMsg = JSON.stringify({
+		var newMsg = {
     		postID: postIDs,
     		content: msgContent,
     		display: true,
     		score: 0
-    	});
-		var testPost = $.post('/newPost', JSON.stringify(newMsg));       
+    	};
+
+		var testPost = $.post('/newPost', newMsg);
+		console.log("before");
+		displayPost(msgContent);
+		postIDs++;       
     });
+
     $("div#upvote").click(function() {
+
     })
+
 });
 
 
-function displayData() {
+function displayPost(msgContent) {
 
+    $.get('/getPost', { postID: postIDs }, function(data, status){
+        console.log(data);
+        $("ul#msg-data").append("<li>Content: "
+            + data.content + " Score: " + data.score + "</li>");
+    });
+    
 }
 

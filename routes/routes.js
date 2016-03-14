@@ -18,9 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 	app.post('/newPost', function(req, res){
 		console.log('POST /');
-		console.dir(req.body);
 
-		//res.writeHead(200, {'Content-Type: 'application/json'});
 		var newPostID = req.body.postID;
 		var newContent = req.body.content;
 		var newDisplay = req.body.display;
@@ -35,7 +33,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
     	newMsg.save(function(err) {
     		if (err) throw err;
-    		console.log('User saved!');
+    		else console.log('User saved!');
     	});
+
+	});
+
+	app.get('/getPost', function(req, res) {
+		if (req.query.postID == null) {
+			Post.findOne({}, {}, {sort: {'created_at' : -1}}, function(err, post){
+				res.send(post.postID);
+			});
+			console.log("null");
+		} else {
+			console.log('GET /');
+			Post.findOne({ postID: req.query.postID},
+				function(err, post) {
+					if (err) return handleError(err);
+					getPost = { content: post.content, score: post.score};
+					res.send({content: getPost.content, score: getPost.score});
+			})
+	
+		}
+		
 	});
 }
