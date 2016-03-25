@@ -3,14 +3,13 @@ var path = require('path');
 var app = express();
 var http = require('http');
 var server = http.createServer(app);
-var config = require('./config/config');
-var mongoose = require ('mongoose');
-var newUser = require('./scripts/create_user');
 
+var config = require('./config/config')
+var mongoose = require('mongoose');
 //sets up connection to mongodb data base for user logins
 mongoose.connect('mongodb://wtfcuuser:wtfcu@ds019628.mlab.com:19628/wtfcu');
 
-newUser();
+var newUser = require('./scripts/create_user');
 
 server.listen(config.port);
 app.set('views', path.join(__dirname, 'public/views'));
