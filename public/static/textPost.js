@@ -3,15 +3,15 @@ var postIDs = 1;
 $(document).ready(function() {
     console.log("test");
     $("div#form1").append(
-        $("<h3/>").text("Submit Post"), $("<p/>").text("Fill out the form"), $("<form/>", {
+        $("<h3/>").text("Submit Post"), $("<form/>", {
         }).append(
             $("<textarea/>", {
                 rows: '5px',
-                cols: '27px',
+                cols: '200px',
                 type: 'text',
                 id: 'vmsg',
                 name: 'msg',
-                placeholder: 'Message'
+                placeholder: 'Enter Post Here'
             })
         )
     )
@@ -51,9 +51,25 @@ function displayPrevPosts() {
             if (data[x].postID >= highestPost) {
                 highestPost = data[x].postID + 1;
             }
+
+            $("div#wrap").append("<div class=\"item\" >"
+                + "<div class=\"vote-span\">"
+                + "<div class=\"vote\" data-action=\"up\" title=\"Vote up\">"
+                + "<i class=\"fa fa-chevron-up\"></i></div>"
+                + "<div class=\"vote-score\">" + data[x].score + "</div>"
+                + "<div class=\"vote\" data-action=\"down\" title=\"Vote down\">"
+                + "<i class=\"fa fa-chevron-down\"></i></div></div>"
+                + "<div id=\"posts\">"
+                + "<div class=\"post\" id=\"postIn\">"
+                + "<p>Content: " + data[x].content + " Score: " + data[x].score + "</p></div></div></div>");
+
+                /*
+             $("div#wrap").append("<div class=\"post\"> <p>Content: "
+                + data[x].content + " Score: " + data[x].score + "</p></div>");
             //displayPost(data[x].postID);
+            
             $("ul#msg-data").append("<li>Content: "
-                + data[x].content + " Score: " + data[x].score + "</li>");
+                + data[x].content + " Score: " + data[x].score + "</li>");*/
         }
         postIDs = highestPost;
     });
@@ -63,8 +79,16 @@ function displayPost(pID) {
     console.log(postIDs);
     $.get('/getPost', { postID: pID }, function(data, status){
         console.log(data);
-        $("ul#msg-data").append("<li>Content: "
-            + data.content + " Score: " + data.score + "</li>");
+        $("div#wrap").append("<div class=\"item\" >"
+                + "<div class=\"vote-span\">"
+                + "<div class=\"vote\" data-action=\"up\" title=\"Vote up\">"
+                + "<i class=\"fa fa-chevron-up\"></i></div>"
+                + "<div class=\"vote-score\">" + data.score + "</div>"
+                + "<div class=\"vote\" data-action=\"down\" title=\"Vote down\">"
+                + "<i class=\"fa fa-chevron-down\"></i></div></div>"
+                + "<div id=\"posts\">"
+                + "<div class=\"post\" id=\"postIn\">"
+                + "<p>Content: " + data.content + " Score: " + data.score + "</p></div></div></div>");
     });
     
 }

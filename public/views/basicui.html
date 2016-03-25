@@ -5,25 +5,129 @@
 
     <meta charset="UTF-8">
     <title>Test</title>
-
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="post.js"></script>
     <script src="textPost.js"></script>
     
+    <style type="text/css">
+/* general styling */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    -o-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+body{
+    font: 12px Arial,Tahoma,Helvetica,FreeSans,sans-serif;
+    text-transform: inherit;
+    color: #333;
+    background: #e7edee;
+    width: 100%;
+}
+.wrap{
+    width: 90%;
+    margin: 15px auto;
+    padding: 15px 10px;
+    background: white;
+    border: 2px solid #DBDBDB;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+a{ text-decoration: none; color: #333}
+h1{
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 2.8em;
+    text-align: center;
+    margin: 25px 0;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+h2{font-size: 1.5em; margin: 8px 0}
+.item{
+    clear: both;
+    margin:0;
+    padding: 5px;
+    overflow: hidden;
+    border-top: 1px solid #DBDBDB;
+}
+.item:last-child{border-bottom:1px solid #DBDBDB}
+.item:hover{background: #f9f9f9}
+.post{
+    width: 600px;
+    float: right;
+    overflow: hidden;
+}
+.post p{text-transform: lowercase;}
+
+/* voting style */
+.vote-span{
+    width: 60px;
+    float: left;
+    margin: 5px 0;
+}
+.vote, .vote-score{
+    clear: both;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    text-align: center;
+    color: #333;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+.vote-score{cursor: text}
+    </style>
     
 </head>
 <body>
 
+    <h1><center>WTF Columbia</center></h1>
+
     <div id="form1"></div>
     <div id="submit-btn"> SUBMIT </div>
-    <div id="upvote"> UPVOTE </div>
+    <!--<div id="upvote"> UPVOTE </div>
     <div id="downvote"> DOWNVOTE </div>
+-->
+    <div class="wrap" id="wrap">
+    <!--
+    <div class="item" >
+      <div class="vote-span"><!-- voting
+        <div class="vote" data-action="up" title="Vote up">
+          <i class="icon-chevron-up"></i>
+        </div><!--vote up
+        <div class="vote-score"><?php echo $row['vote'] ?></div>
+        <div class="vote" data-action="down" title="Vote down">
+          <i class="icon-chevron-down"></i>
+        </div><!--vote down
+      </div>
+      <div id="posts">
+      <!--
+        <div class="post" id="postIn"><!-- post data 
+        <h2></h2>
+        <p></p>
+        </div>-->
+      </div>
+      
+    </div>
+
+  </div>
+
     <ul id="msg-data">
         
     </ul>
     </div>
     
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 </body>
 </html>
