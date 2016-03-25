@@ -16,6 +16,7 @@ $(document).ready(function() {
         )
     )
 
+    displayPrevPosts();
     $("div#submit-btn").click(function() {
 
     	var msgContent = $("#vmsg").val();
@@ -27,9 +28,10 @@ $(document).ready(function() {
     		score: 0
     	};
 
+
 		var testPost = $.post('/newPost', newMsg);
 		console.log("before");
-		displayPost(msgContent);
+		displayPost(postIDs);
 		postIDs++;       
     });
 
@@ -39,10 +41,27 @@ $(document).ready(function() {
 
 });
 
+function displayPrevPosts() {
+    $.get('/getPost', {}, function(data,status) {
+        var highestPost = 0;
+        console.log("HELLO");
+        console.log(data);
+        postIDs = data.postID;
+        for (var x = 0; x < data.length; x++) {
+            if (data[x].postID >= highestPost) {
+                highestPost = data[x].postID + 1;
+            }
+            //displayPost(data[x].postID);
+            $("ul#msg-data").append("<li>Content: "
+                + data[x].content + " Score: " + data[x].score + "</li>");
+        }
+        postIDs = highestPost;
+    });
+}
 
-function displayPost(msgContent) {
-
-    $.get('/getPost', { postID: postIDs }, function(data, status){
+function displayPost(pID) {
+    console.log(postIDs);
+    $.get('/getPost', { postID: pID }, function(data, status){
         console.log(data);
         $("ul#msg-data").append("<li>Content: "
             + data.content + " Score: " + data.score + "</li>");
