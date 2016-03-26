@@ -3,6 +3,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 
 var Post = require('../scripts/post');
+var User = require('../scripts/User');
 
 module.exports = function (app){
 app.use(bodyParser.json());
@@ -14,6 +15,26 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 	app.get('/basicUI', function(req, res) {
   		res.sendFile(path.join(__dirname, '../public/views/basicUI.html'))
+	});
+
+	app.get('/index', function(req, res) {
+  		res.sendFile(path.join(__dirname, '../public/views/index.html'))
+	});
+
+	app.post('/new_user', function(req,res) {
+		console.log('POST/');
+
+		// save the user
+		var newUser = new User({
+			username: req.body.username,
+			email_id: req.body.email,
+			password: req.body.password
+    	});
+
+		newUser.save(function(err) {
+		  if (err) throw err;
+		  console.log('User created!');
+		});
 	});
 
 	app.post('/newPost', function(req, res){

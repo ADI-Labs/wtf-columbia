@@ -9,8 +9,6 @@ var mongoose = require('mongoose');
 //sets up connection to mongodb data base for user logins
 mongoose.connect('mongodb://wtfcuuser:wtfcu@ds019628.mlab.com:19628/wtfcu');
 
-var newUser = require('./scripts/create_user');
-
 server.listen(config.port);
 app.set('views', path.join(__dirname, 'public/views'));
 app.set('view engine', 'jade');
