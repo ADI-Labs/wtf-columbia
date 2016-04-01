@@ -54,25 +54,65 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
     	newMsg.save(function(err) {
     		if (err) throw err;
-    		else console.log('User saved!');
+    		else console.log('Post saved!');
     	});
 
 	});
 
-	app.get('/getPost', function(req, res) {
-		if (req.query.postID == null) {
-			Post.findOne({}, {}, {sort: {'created_at' : -1}}, function(err, post){
-				res.send(post.postID);
+	app.get('/upvote', function(req, res){
+
+		var postID = req.query.postID;		
+		Post.update({postID: postID},
+			{$inc: {score: 1}},
+			function(err, numAffected){
+				if (err) return handleError(err);
 			});
-			console.log("null");
+	});
+
+	app.get('/downvote', function(req,res){
+		var postID = req.query.postID;		
+		Post.update({postID: postID},
+			{$inc: {score: -1}},
+			function(err, numAffected){
+				if (err) return handleError(err);
+			});
+	});
+
+	app.get('/getPost', function(req, res) {
+		//console.log('GET /');
+		if (req.query.postID == null) {
+			
+			Post.find({}, function(err, posts) {
+				if (err) return handleError(err);
+				if (posts == null) {
+					console.log("HELLO");
+					res.send(0);
+				} else {
+					//console.log(posts);
+					res.send(posts);	
+				}
+				//res.send(posts);
+			});
+
+			/*
+			if (post.postID == null) {
+				res.send(0);
+			} else {
+				res.send(post.postID);
+			}
+			Post.findOne({}, {}, {sort: {'postID' : -1}}, function(err, post){
+				
+				
+			});*/
+			//console.log(posts);
 		} else {
-			console.log('GET /');
+			
 			Post.findOne({ postID: req.query.postID},
 				function(err, post) {
 					if (err) return handleError(err);
 					getPost = { content: post.content, score: post.score};
 					res.send({content: getPost.content, score: getPost.score});
-			})
+			});
 	
 		}
 		
