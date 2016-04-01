@@ -59,6 +59,25 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 	});
 
+	app.get('/upvote', function(req, res){
+
+		var postID = req.query.postID;		
+		Post.update({postID: postID},
+			{$inc: {score: 1}},
+			function(err, numAffected){
+				if (err) return handleError(err);
+			});
+	});
+
+	app.get('/downvote', function(req,res){
+		var postID = req.query.postID;		
+		Post.update({postID: postID},
+			{$inc: {score: -1}},
+			function(err, numAffected){
+				if (err) return handleError(err);
+			});
+	});
+
 	app.get('/getPost', function(req, res) {
 		//console.log('GET /');
 		if (req.query.postID == null) {
@@ -93,7 +112,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 					if (err) return handleError(err);
 					getPost = { content: post.content, score: post.score};
 					res.send({content: getPost.content, score: getPost.score});
-			})
+			});
 	
 		}
 		
