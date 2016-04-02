@@ -1,41 +1,83 @@
-
 var path = require('path');
 var bodyParser = require('body-parser');
 
 var Post = require('../scripts/post');
 var User = require('../scripts/User');
 
-module.exports = function (app){
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-	
+module.exports = function (app, passport){
+
+	console.log("here");
+	/*
 	app.get('/', function (req, res) {
 		res.render('basicUI', {title : "Hello World"})
 	});
-
-	app.get('/basicUI', function(req, res) {
-  		res.sendFile(path.join(__dirname, '../public/views/basicUI.html'))
-	});
+*/
+	/*app.get('/basicUI', function(req, res) {
+  		res.sendFile(path.join(__dirname, '../public/views/basicUI'))
+	});*/
 
 	app.get('/index', function(req, res) {
   		res.sendFile(path.join(__dirname, '../public/views/index.html'))
 	});
 
-	app.post('/new_user', function(req,res) {
-		console.log('POST/');
-
-		// save the user
-		var newUser = new User({
-			username: req.body.username,
-			email_id: req.body.email,
-			password: req.body.password
-    	});
-
-		newUser.save(function(err) {
-		  if (err) throw err;
-		  console.log('User created!');
-		});
+	app.get('/login', function(req, res) {
+  		res.sendFile(path.join(__dirname, '../public/views/login.html'))
 	});
+
+// =====================================
+    // GOOGLE ROUTES =======================
+    // =====================================
+    // send to google to do the authentication
+    // profile gets us their basic information including their name
+    // email gets their emails
+
+  app.get('/', function(req, res) {
+
+    if (req.isAuthenticated()) {
+      res.render(path.join(__dirname, '../public/views/basicui'));
+    } else {
+    	console.log("no");
+    	
+        /*res.render(__dirname, '../public/views/index'), {
+          title: 'wtf-columbia'
+        }*/
+    }
+  });
+
+  app.get('/auth/google', passport.authenticate('google', {
+    scope: ['profile', 'email']
+  }));
+
+  app.get('/auth/google/callback', passport.authenticate('google', {
+      successRedirect: '/basicUI',
+      failureRedirect: '/'
+    }),
+    function(req, res) {
+      res.redirect('/basicUI');
+    }
+  );
+
+  app.get('/basicUI', function(req, res) {
+  	console.log('beginning of basicUI');
+    if (req.isAuthenticated()) {
+      /*var props = {
+        user: {
+          id: req.user._id,
+          name: req.user.info.name,
+          email: req.user.info.email
+        }
+      };*/
+      console.log('basic ui');
+      res.render('index');
+
+      /*res.render('basicui', {
+        title: 'wtf-columbia',
+      });*/
+    } else {
+      res.redirect('/');
+    }
+  });
+
 
 	app.post('/newPost', function(req, res){
 		console.log('POST /');
@@ -77,4 +119,37 @@ app.use(bodyParser.urlencoded({ extended: true }));
 		}
 		
 	});
+
+};
+
+
+
+/*
+	app.get('/get_login', function(req,res) {
+		var valid = User.findOne({username : req.body.username, password: req.body.password}, function (err,user){
+			if (err) {
+				console.log("bad user");
+			}
+			else {
+				console.log("here");
+			}
+		});
+	});
 }
+
+	app.post('/new_user', function(req,res) {
+		console.log('POST/');
+
+		// save the user
+		var newUser = new User({
+			username: req.body.username,
+			email_id: req.body.email,
+			password: req.body.password
+    	});
+
+		newUser.save(function(err) {
+		  if (err) throw err;
+		  console.log('User created!');
+		});
+	});
+*/
