@@ -5,7 +5,8 @@ var postSchema = new Schema({
 	postID: Number,
 	content: String,
 	display: Boolean,
-	score: Number
+	score: Number,
+	voted: Number
 });
 
 postSchema.methods.upvote = function() {
