@@ -160,22 +160,23 @@ module.exports = function (app, passport){
 		
 	});
 
-};
 
 
-
-/*
 	app.get('/get_login', function(req,res) {
 		var valid = User.findOne({username : req.body.username, password: req.body.password}, function (err,user){
 			if (err) {
 				console.log("bad user");
+
 			}
 			else {
-				console.log("here");
+				res.redirect('/basicUI');
+				console.log("we are in!");
 			}
 		});
 	});
-}
+
+
+
 
 	app.post('/new_user', function(req,res) {
 		console.log('POST/');
@@ -190,6 +191,8 @@ module.exports = function (app, passport){
 		newUser.save(function(err) {
 		  if (err) throw err;
 		  console.log('User created!');
+		  res.render(path.join(__dirname, '../public/views/basicui.html'))
 		});
 	});
-*/
+
+};
