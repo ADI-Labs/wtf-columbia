@@ -11,6 +11,7 @@
 	font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 }
+
 body{
 	font: 12px Arial,Tahoma,Helvetica,FreeSans,sans-serif;
 	text-transform: inherit;

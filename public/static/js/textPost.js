@@ -19,12 +19,7 @@ $(document).ready(function() {
 
     $('.vote').click(function() {
         console.log("here");
-        /*var idValue = $(this).attr('id');
-
-        var postID = document.getElementById("upvote").dataset.id;
-        $.get('/upvote', {postID: postID}, function(data, status) {
-            console.log(data);
-        });*/
+        
 
     });
 
@@ -47,6 +42,27 @@ $(document).ready(function() {
 
 });
 
+$(document).on('click', ".fa.fa-chevron-up", function() {
+    var postID = $(this).attr('data-id');
+    $.get('/vote', {
+                postID: postID,
+                vote: 1
+            }, function(data, status) {
+                console.log(data + ", " + status);
+            });
+});
+
+$(document).on('click', ".fa.fa-chevron-down", function() {
+    var postID = $(this).attr('data-id');
+    $.get('/vote', {
+                postID: postID,
+                vote: -1
+            }, function(data, status) {
+                console.log(data + ", " + status);
+            });
+});
+
+/*
 $(document).on('click', ".fa.fa-chevron-up", function() {
     var postID = $(this).attr('data-id');
     var hasUpvoted = $(this).attr('data-b') === "true";
@@ -109,7 +125,7 @@ $(document).on('click', ".fa.fa-chevron-down", function() {
 
         $("div#" + postID).replaceWith("<div class=\"vote-score\" id=\"" + postID + "\">" + score + "</div>");
     }
-})
+})*/
 
 
 function displayPrevPosts() {

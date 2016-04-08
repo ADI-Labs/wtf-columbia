@@ -45,8 +45,9 @@ module.exports = function (app, passport){
 
   app.get('/dashboard', function(req, res) {
   	console.log('beginning of dashboard');
-    if (req.isAuthenticated()) {
-      res.render('dashboard');
+    if (!req.isAuthenticated()) {
+      res.sendFile(path.join(__dirname, '../public/views/dashboard.html'))
+      //res.render('dashboard');
     } else {
       res.redirect('/');
     }
@@ -65,7 +66,8 @@ module.exports = function (app, passport){
     		postID: newPostID,
     		content: newContent,
     		display: newDisplay,
-    		score: newScore
+    		score: newScore,
+    		voted: 0
     	});
 
     	newMsg.save(function(err) {
@@ -73,6 +75,16 @@ module.exports = function (app, passport){
     		else console.log('Post saved!');
     	});
 
+	});
+
+	app.get('/vote', function(req, res){
+		var postID = req.query.postID;
+		var vote = req.query.voted;
+		var voted = Post.findOne({ postID: req.query.postID}).voted;
+
+		//case upvote
+		//if (vote == 1 && )
+		//if (voted)
 	});
 
 	app.get('/upvote', function(req, res){
@@ -109,18 +121,6 @@ module.exports = function (app, passport){
 				}
 				//res.send(posts);
 			});
-
-			/*
-			if (post.postID == null) {
-				res.send(0);
-			} else {
-				res.send(post.postID);
-			}
-			Post.findOne({}, {}, {sort: {'postID' : -1}}, function(err, post){
-
-
-			});*/
-			//console.log(posts);
 		} else {
 
 			Post.findOne({ postID: req.query.postID},
