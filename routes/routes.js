@@ -5,12 +5,22 @@ var Post = require('../scripts/models/post');
 var User = require('../scripts/models/User');
 
 module.exports = function (app, passport){
-	app.get('/index', function(req, res) {
-  		res.render('index.html')
+
+	//renders the pages of login
+	app.get('/login', function(req, res) {
+  		res.sendFile(path.join(__dirname , '../public/views/landing.html'));
+		//when you have jade files make this
+  		//res.render('login.jade')
 	});
 
-	app.get('/login', function(req, res) {
-  		res.render('login.html')
+//========================================
+//        login + logout routes
+//========================================
+	
+	app.get('/logout', function(req,res) {
+		console.log("logged out");
+		req.logout();
+		res.redirect('/landing.html');
 	});
 
   // =====================================
@@ -29,7 +39,7 @@ module.exports = function (app, passport){
       }
     }
   });
-
+ 
   app.get('/auth/google', passport.authenticate('google', {
     scope: ['profile', 'email']
   }));
@@ -53,6 +63,9 @@ module.exports = function (app, passport){
   });
 
 
+//============================================
+//             posting routes
+//============================================
 	app.post('/newPost', function(req, res){
 		console.log('POST /');
 
@@ -110,17 +123,6 @@ module.exports = function (app, passport){
 				//res.send(posts);
 			});
 
-			/*
-			if (post.postID == null) {
-				res.send(0);
-			} else {
-				res.send(post.postID);
-			}
-			Post.findOne({}, {}, {sort: {'postID' : -1}}, function(err, post){
-
-
-			});*/
-			//console.log(posts);
 		} else {
 
 			Post.findOne({ postID: req.query.postID},
@@ -131,3 +133,4 @@ module.exports = function (app, passport){
 			});
 		}
 	});
+};

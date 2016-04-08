@@ -43,6 +43,7 @@ module.exports = function(config, passport) {
                 // try to find the user based on their google id
                 var email = profile.emails[0].value;
                 console.log(email);
+                var validity = validateEmail(email);
                 User.findOne({
                     'email_id': email
                 }, function(err, user) {
@@ -52,7 +53,8 @@ module.exports = function(config, passport) {
                         // if a user is found, log them in
                         return done(null, user);
                     } else {
-                        // if the user isnt in our database, create a new user
+                        // if the user isnt in our database & is columbia; create a new user
+                        if (validity){
                         var newUser = new User();
 
                         // set all of the relevant information
@@ -60,18 +62,19 @@ module.exports = function(config, passport) {
                         newUser.username = profile.displayName;
                         newUser.email = email;
 
-                        /*newUser.google.id    = profile.id;
-                    newUser.google.token = token;
-                    newUser.google.name  = profile.displayName;
-                    newUser.google.email = profile.emails[0].value; // pull the first email
-*/
                         // save the user
                         newUser.save(function(err) {
                             if (err)
                                 throw err;
                             return done(null, newUser);
-                            console.log('User created!')
-                        });
+                            console.log('User created!');
+                        }); 
+                        }
+                        //for when there is no account and they arent affiliated 
+                        else {
+                           // window.alert("Error Password or Username");
+                           res.redirect('/landing.html');
+                        }
                     }
                 });
             });
