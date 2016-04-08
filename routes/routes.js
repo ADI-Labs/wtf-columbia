@@ -20,7 +20,7 @@ module.exports = function (app, passport){
 	app.get('/logout', function(req,res) {
 		console.log("logged out");
 		req.logout();
-		res.redirect('/landing.html');
+		res.redirect('/');
 	});
 
   // =====================================
@@ -32,11 +32,14 @@ module.exports = function (app, passport){
 
   app.get('/', function(req, res) {
     if (req.isAuthenticated()) {
-      res.render('dashboard');
+        res.sendFile(path.join(__dirname , '../public/views/dashboard.html'));
+      //res.render('dashboard');
     } else {
-      res.render('index'), {
+        res.sendFile(path.join(__dirname , '../public/views/landing.html'));
+      /*res.render('landing')
+      , {
         title: 'wtf-columbia'
-      }
+      }*/
     }
   });
  
