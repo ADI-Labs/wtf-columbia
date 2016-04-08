@@ -5,12 +5,22 @@ var Post = require('../scripts/models/post');
 var User = require('../scripts/models/User');
 
 module.exports = function (app, passport){
-	app.get('/index', function(req, res) {
-  		res.render('index.html')
+
+	//renders the pages of login
+	app.get('/login', function(req, res) {
+  		res.sendFile(path.join(__dirname , '../public/views/landing.html'));
+		//when you have jade files make this
+  		//res.render('login.jade')
 	});
 
-	app.get('/login', function(req, res) {
-  		res.render('login.html')
+//========================================
+//        login + logout routes
+//========================================
+	
+	app.get('/logout', function(req,res) {
+		console.log("logged out");
+		req.logout();
+		res.redirect('/');
 	});
 
   // =====================================
@@ -22,14 +32,17 @@ module.exports = function (app, passport){
 
   app.get('/', function(req, res) {
     if (req.isAuthenticated()) {
-      res.render('dashboard');
+        res.sendFile(path.join(__dirname , '../public/views/dashboard.html'));
+      //res.render('dashboard');
     } else {
-      res.render('index'), {
+        res.sendFile(path.join(__dirname , '../public/views/landing.html'));
+      /*res.render('landing')
+      , {
         title: 'wtf-columbia'
-      }
+      }*/
     }
   });
-
+ 
   app.get('/auth/google', passport.authenticate('google', {
     scope: ['profile', 'email']
   }));
@@ -54,6 +67,9 @@ module.exports = function (app, passport){
   });
 
 
+//============================================
+//             posting routes
+//============================================
 	app.post('/newPost', function(req, res){
 		console.log('POST /');
 
@@ -121,6 +137,7 @@ module.exports = function (app, passport){
 				}
 				//res.send(posts);
 			});
+
 		} else {
 
 			Post.findOne({ postID: req.query.postID},
