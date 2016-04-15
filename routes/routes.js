@@ -58,7 +58,7 @@ module.exports = function (app, passport){
 
   app.get('/dashboard', function(req, res) {
   	console.log('beginning of dashboard');
-    if (!req.isAuthenticated()) {
+    if (req.isAuthenticated()) {
       res.sendFile(path.join(__dirname, '../public/views/dashboard.html'))
       //res.render('dashboard');
     } else {
