@@ -42,6 +42,7 @@ $(document).ready(function() {
 
 });
 
+/*
 $(document).on('click', ".fa.fa-chevron-up", function() {
     var postID = $(this).attr('data-id');
     $.get('/vote', {
@@ -61,8 +62,8 @@ $(document).on('click', ".fa.fa-chevron-down", function() {
                 console.log(data + ", " + status);
             });
 });
+*/
 
-/*
 $(document).on('click', ".fa.fa-chevron-up", function() {
     var postID = $(this).attr('data-id');
     var hasUpvoted = $(this).attr('data-b') === "true";
@@ -125,7 +126,7 @@ $(document).on('click', ".fa.fa-chevron-down", function() {
 
         $("div#" + postID).replaceWith("<div class=\"vote-score\" id=\"" + postID + "\">" + score + "</div>");
     }
-})*/
+})
 
 
 function displayPrevPosts() {
