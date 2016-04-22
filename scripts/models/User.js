@@ -8,15 +8,15 @@ var userSchema = new Schema({
 		required: true,
 		unique: true
 	},
-	name: {
+	username: {
 			type: String,
 			required: true,
-			unique: true
+			unique: false
 	},
 	email: {
-		type: String,
-		required: true,
-		unique: true
+		type: String, 
+		required: false, 
+		unique: false
 	},
 	admin: Boolean,
 	// created_at: Date,
