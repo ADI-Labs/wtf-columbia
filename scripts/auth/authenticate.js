@@ -4,16 +4,16 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
 //drive = require('../drive/drive');
 
 //checks if email is valid, returns boolean
-function validateEmail(email) {
-    var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
-    if (re.test(email)) {
-        if ((email.indexOf('@columbia.edu', email.length - '@columbia.edu'.length) !== -1) || (email.indexOf('@barnard.edu', email.length - '@barnard.edu'.length) !== -1)) {
-            return true;
-        }
-    } else {
-        return false;
-    }
-}
+// function validateEmail(email) {
+//     var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
+//     if (re.test(email)) {
+//         if ((email.indexOf('@columbia.edu', email.length - '@columbia.edu'.length) !== -1) || (email.indexOf('@barnard.edu', email.length - '@barnard.edu'.length) !== -1)) {
+//             return true;
+//         }
+//     } else {
+//         return false;
+//     }
+// }
 
 module.exports = function(config, passport) {
     // used to serialize the user for the session
@@ -32,7 +32,7 @@ module.exports = function(config, passport) {
     passport.use(new GoogleStrategy({
             clientID: config.clientID,
             clientSecret: config.clientSecret,
-            callbackURL: config.callbackURLDev ///ASK ABOUT WHAT THIS IS SUPPOSED TO BE
+            callbackURL: config.callbackURLDev 
         },
         function(token, refreshToken, profile, done) {
 
@@ -41,40 +41,36 @@ module.exports = function(config, passport) {
             process.nextTick(function() {
 
                 // try to find the user based on their google id
-                var email = profile.emails[0].value;
-                console.log(email);
-                var validity = validateEmail(email);
+                var id = profile.id;
+                // var validity = validateEmail(email);
                 User.findOne({
-                    'email_id': email
+                    '_id': id
                 }, function(err, user) {
                     if (err)
                         return done(err);
                     if (user) {
                         // if a user is found, log them in
+                        console.log(user);
                         return done(null, user);
                     } else {
                         // if the user isnt in our database & is columbia; create a new user
-                        if (validity){
+                        // if (validity){
                         var newUser = new User();
 
                         // set all of the relevant information
                         newUser._id = profile.id;
-                        newUser.username = profile.displayName;
+                        newUser.name = profile.displayName;
                         newUser.email = email;
+                        console.log(newUser);
 
                         // save the user
                         newUser.save(function(err) {
                             if (err)
-                                throw err;
+                                throw(err);
                             return done(null, newUser);
                             console.log('User created!');
                         }); 
-                        }
-                        //for when there is no account and they arent affiliated 
-                        else {
-                           // window.alert("Error Password or Username");
-                           res.redirect('/landing.html');
-                        }
+                        
                     }
                 });
             });
