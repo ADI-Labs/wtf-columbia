@@ -2,6 +2,11 @@ var postIDs = 1;
 
 
 $(document).ready(function() {
+
+    $("div#logout").click(function() {
+        $.get('/logout');
+    });
+
     $("div#form1").append(
         $("<h3/>").text("Submit Post"), $("<form/>", {}).append(
             $("<textarea/>", {

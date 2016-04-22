@@ -3,7 +3,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     mongoose = require('mongoose');
 //drive = require('../drive/drive');
 
-//checks if email is valid, returns boolean
+// checks if email is valid, returns boolean
 function validateEmail(email) {
     var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
     if (re.test(email)) {
@@ -32,7 +32,7 @@ module.exports = function(config, passport) {
     passport.use(new GoogleStrategy({
             clientID: config.clientID,
             clientSecret: config.clientSecret,
-            callbackURL: config.callbackURLDev ///ASK ABOUT WHAT THIS IS SUPPOSED TO BE
+            callbackURL: config.callbackURLDev 
         },
         function(token, refreshToken, profile, done) {
 
@@ -41,37 +41,43 @@ module.exports = function(config, passport) {
             process.nextTick(function() {
 
                 // try to find the user based on their google id
-                var email = profile.emails[0].value;
-                console.log(email);
+                var id = profile.id;
+                var validity = validateEmail(profile.emails[0].value);
                 User.findOne({
-                    'email_id': email
+                    '_id': id
                 }, function(err, user) {
                     if (err)
                         return done(err);
                     if (user) {
                         // if a user is found, log them in
+                        console.log(user);
                         return done(null, user);
                     } else {
-                        // if the user isnt in our database, create a new user
+                        // if the user isnt in our database & is columbia; create a new user
+                        if (validity){
                         var newUser = new User();
 
                         // set all of the relevant information
                         newUser._id = profile.id;
                         newUser.username = profile.displayName;
-                        newUser.email = email;
+                        newUser.email = profile.emails[0].value;
 
-                        /*newUser.google.id    = profile.id;
-                    newUser.google.token = token;
-                    newUser.google.name  = profile.displayName;
-                    newUser.google.email = profile.emails[0].value; // pull the first email
-*/
+                        console.log(newUser);
+
                         // save the user
                         newUser.save(function(err) {
                             if (err)
-                                throw err;
+                                throw(err);
+                            console.log(newUser.email);
                             return done(null, newUser);
-                            console.log('User created!')
-                        });
+                            console.log('User created!');
+                        }); 
+                        }
+
+                        else
+                        {
+                            return done(null, null);
+                        }
                     }
                 });
             });
