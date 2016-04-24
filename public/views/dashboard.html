@@ -5,28 +5,87 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel ="stylesheet" href = "stylesheets/dashboard.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    
+    
+    
     
 </head>
 <body>
 
-    <h1><center>WTF Columbia</center></h1>
+	<h1><center>WTF Columbia</center></h1>
+	<div class="header">
+		<ul class="menu align-right">
+			<li>
+                <a href="http://localhost:3000/logout">Log Out</a>
+            </li>
+			<!--Logout button here -->
+			
+		
+		<div class="title">
+			
+			<!-- Title/description here -->
+		</div>
+	</div>
 
-    <form action="http://localhost:3000/logout">
-            <input type="submit" value="Logout">
-    </form>
+	<div class="submit-wrapper">
 
-    <div class="form" id="form1"></div>
-    <div id="submit-btn"> SUBMIT </div>
+		<a id="modal_trigger" href="#modal" class="btn">Post a complaint</a>
+
+		<div id="modal" class="popupContainer" style="display: none;">
+			<header class="popupHeader">
+				<span class="header_title">Post</span>
+				<span class="modal_close"><i class="fa fa-times"></i></span>
+			</header>
+
+		    <section class="popupBody">
+
+		    	<div class="user_login">
+			    	<form>
+				        <label>Post</label>
+				        <textarea rows="5px" type="text" id="vmsg" name="msg" placeholder="  Enter Post Here"></textarea> 
+				        <!--<input type="text">--><br><br>	        
+				        <div class="action_btns">
+							
+							<div class="one_half"><span class="modal_close"><a href="" id="login_form" class="btn">Cancel</a></span></div>
+
+							<div class="one_half last"><a href="#" id="submit-btn" class="btn btn_red">Post</a></div>
+						</div>
+			    	</form>
+	    		</div>
+		    </section>
+		</div>
+
+	</div>
+		
+
+	<div class="post-body">
+		<h6 class="h6-divider">
+	    	<span>Posts</span>
+	    </h6>
+		<div class="tabs">
+			<!-- Future tabs for different kinds of posts -->
+		</div>
+
+
+
+    	<div class="wrap" id="wrap"></div>
+
+
+    	<ul id="msg-data"></ul>
     
-    <div class="wrap" id="wrap"></div>
+
+	</div>
 
 
-    <ul id="msg-data"></ul>
-    
+
+    <script type="text/javascript">
+    	
+    </script>
 
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.leanmodal/1.1/jquery.leanmodal.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/textPost.js"></script> 

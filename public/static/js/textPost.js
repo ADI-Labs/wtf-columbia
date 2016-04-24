@@ -2,11 +2,15 @@ var postIDs = 1;
 
 
 $(document).ready(function() {
+    
 
     $("div#logout").click(function() {
         $.get('/logout');
     });
 
+
+
+/*
     $("div#form1").append(
         $("<h3/>").text("Submit Post"), $("<form/>", {}).append(
             $("<textarea/>", {
@@ -18,11 +22,13 @@ $(document).ready(function() {
                 placeholder: 'Enter Post Here'
             })
         )
-    );
+    );*/
 
     displayPrevPosts();
+    
+   
 
-    $("div#submit-btn").click(function() {
+    $("a#submit-btn").click(function() {
         var msgContent = $("#vmsg").val();
         var newMsg = {
             postID: postIDs,
@@ -33,10 +39,45 @@ $(document).ready(function() {
 
         $.post('/newPost', newMsg);
         displayPost(postIDs);
+        $("#lean_overlay").trigger("click");
         postIDs++;
     });
 
+    $("#modal_trigger").leanModal({
+        top : 200,
+        overlay : 0.6,
+        closeButton: ".modal_close",
+    });
+
+    // Calling Login Form
+    $("#login_form").click(function () {
+        $(".social_login").hide();
+        $(".user_login").show();
+        return false;
+    });
+
+// Calling Register Form
+    $("#register_form").click(function () {
+        $(".social_login").hide();
+        $(".user_register").show();
+        $(".header_title").text('Register');
+        return false;
+    });
+
+    // Going back to Social Forms
+    $(".back_btn").click(function () {
+        $(".user_login").hide();
+        $(".user_register").hide();
+        $(".social_login").show();
+        $(".header_title").text('Login');
+        return false;
+    });
+
+
 });
+
+
+
 
 
 $(document).on('click', ".fa.fa-chevron-up", function() {

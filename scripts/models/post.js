@@ -6,7 +6,8 @@ var postSchema = new Schema({
 	content: String,
 	display: Boolean,
 	score: Number,
-	voted: Number
+	voted: Number,
+	categories: [Number]
 });
 
 postSchema.methods.upvote = function() {
