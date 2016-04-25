@@ -77,13 +77,15 @@ module.exports = function (app, passport){
 		var newContent = req.body.content;
 		var newDisplay = req.body.display;
 		var newScore = req.body.score;
+		var categories = req.body.categories;
 
 		var newMsg = new Post({
     		postID: newPostID,
     		content: newContent,
     		display: newDisplay,
     		score: newScore,
-    		voted: 0
+    		voted: 0,
+    		categories: categories
     	});
 
     	newMsg.save(function(err) {

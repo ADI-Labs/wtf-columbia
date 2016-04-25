@@ -353,7 +353,9 @@ textarea{
 
 .wrap{
     width: 90%;
-    margin: 15px auto;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 15px 10px;
     background: white;
     border: 2px solid #DBDBDB;
@@ -382,7 +384,7 @@ h2{font-size: 1.5em; margin: 8px 0}
 .item:last-child{border-bottom:1px solid #DBDBDB}
 .item:hover{background: #f9f9f9}
 .post{
-    width: 600px;
+    width: auto;
     float: left;
     overflow: hidden;
 }
@@ -453,7 +455,8 @@ h6.h6-divider {
     color: #000;
     font-size: 80%;
     line-height: 16px;
-    margin-bottom: 2.5%;
+    margin-top: 4%;
+    margin-bottom: 1%;
 }
 
 h6.h6-divider span {
@@ -463,4 +466,20 @@ h6.h6-divider span {
     background: #fefefe;
     color: #000;
     position: relative;
+}
+
+.tabs{
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 15px;
+    padding-bottom: 0px;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: white;
+}
+
+.tabs>li{
+    display:inline;
 }

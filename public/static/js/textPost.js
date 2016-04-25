@@ -2,31 +2,17 @@ var postIDs = 1;
 
 
 $(document).ready(function() {
-    
+
+
+    displayPrevPosts(0);    //0 = all    
 
     $("div#logout").click(function() {
         $.get('/logout');
+    });  
+
+    $("a#cancel-btn").click(function(){
+        $("#lean_overlay").trigger("click");
     });
-
-
-
-/*
-    $("div#form1").append(
-        $("<h3/>").text("Submit Post"), $("<form/>", {}).append(
-            $("<textarea/>", {
-                rows: '5px',
-                width: '100%',
-                type: 'text',
-                id: 'vmsg',
-                name: 'msg',
-                placeholder: 'Enter Post Here'
-            })
-        )
-    );*/
-
-    displayPrevPosts();
-    
-   
 
     $("a#submit-btn").click(function() {
         var msgContent = $("#vmsg").val();
@@ -34,7 +20,8 @@ $(document).ready(function() {
             postID: postIDs,
             content: msgContent,
             display: true,
-            score: 0
+            score: 0,
+            categories: 0
         };
 
         $.post('/newPost', newMsg);
@@ -49,6 +36,21 @@ $(document).ready(function() {
         closeButton: ".modal_close",
     });
 
+    $("#all_tab").click(function(){
+        deletePosts();
+        displayPrevPosts(0);
+    });
+
+    $("#pending_tab").click(function(){
+        deletePosts();
+        displayPrevPosts(1);
+    });
+
+    $("#completed_tab").click(function(){
+        deletePosts();
+        displayPrevPosts(2);
+    });
+
     // Calling Login Form
     $("#login_form").click(function () {
         $(".social_login").hide();
@@ -56,29 +58,7 @@ $(document).ready(function() {
         return false;
     });
 
-// Calling Register Form
-    $("#register_form").click(function () {
-        $(".social_login").hide();
-        $(".user_register").show();
-        $(".header_title").text('Register');
-        return false;
-    });
-
-    // Going back to Social Forms
-    $(".back_btn").click(function () {
-        $(".user_login").hide();
-        $(".user_register").hide();
-        $(".social_login").show();
-        $(".header_title").text('Login');
-        return false;
-    });
-
-
 });
-
-
-
-
 
 $(document).on('click', ".fa.fa-chevron-up", function() {
     var postID = $(this).attr('data-id');
@@ -148,20 +128,10 @@ $(document).on('click', ".fa.fa-chevron-down", function() {
         $("div#" + postID).replaceWith("<div class=\"vote-score\" id=\"" + postID + "\">" + score + "</div>");
     }
 })
-/*
-function updateArrows(isUp, postID) {
-    var startChar;
-    if (isUp) {
-        startChar = "u";
-    } else {
-        startChar = "d";
-    }
-    var html = [
-        '<div class="vote-score" id="' + 
-    ].join("\n");
 
-    <i id=\"d" + postID + "\" data-b = \"true\" class=\"fa fa-chevron-down\" data-id=\"" + postID + "\" style=\"color:#F00\"></i></div></div>
-}*/
+function deletePosts() {
+    $("div#wrap").html("");
+}
 
 function appendPost(data) {
     var html = [
@@ -190,13 +160,14 @@ function appendPost(data) {
 
 }
 
-function displayPrevPosts() {
+function displayPrevPosts(cat) {
     $.get('/getPost', {}, function(data, status) {
         var highestPost = 0;
         console.log(data);
         postIDs = data.length;
         for (var x = 0; x < data.length; x++) {
-            appendPost(data[x]);
+            if ($.inArray(cat, data[x].categories) != -1)
+                appendPost(data[x]);
         }
     });
 }
