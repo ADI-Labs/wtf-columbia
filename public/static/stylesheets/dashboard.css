@@ -396,6 +396,13 @@ h2{font-size: 1.5em; margin: 8px 0}
     float: left;
     margin: 5px 0;
 }
+
+.vote-icon{
+    width: 60px;
+    float:right;
+    margin-top: 35px;
+}
+
 .vote, .vote-score{
     clear: both;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);

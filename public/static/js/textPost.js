@@ -134,6 +134,28 @@ function deletePosts() {
 }
 
 function appendPost(data) {
+
+    var iconString;
+
+    if($.inArray(1, data.categories) != -1) {
+        iconString = [
+            '<div class="vote-icon">',
+                '<div class="vote">',
+                    '<i class="fa fa-spinner"></i>',
+                '</div>',
+            '</div>'
+        ].join("\n");
+    }
+    if ($.inArray(2, data.categories) != -1) {
+        iconString = [
+            '<div class="vote-icon">',
+                '<div class="vote">',
+                    '<i class="fa fa-check"></i>',
+                '</div>',
+            '</div>'
+        ].join("\n");
+    }
+
     var html = [
         '<div class ="item">',
             '<div class="vote-span">',
@@ -147,11 +169,13 @@ function appendPost(data) {
                     '<i id="d' + data.postID + '" data-b="false" class="fa fa-chevron-down" data-score="' + data.score + '" data-id="' + data.postID + '"></i>',
                 '</div>',
             '</div>',
-        '<div id="posts">',
-            '<div class="post" id="postIn">',
-                '<p>',
-                    data.content,
-                '</p>',
+            '<div id="posts">',
+                '<div class="post" id="postIn">',
+                    '<p>',
+                        data.content,
+                    '</p>',
+            '</div>',
+            iconString,
             '</div>',
         '</div>'                                            
     ].join("\n");
