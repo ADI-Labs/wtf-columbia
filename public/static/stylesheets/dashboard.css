@@ -96,6 +96,13 @@ h1 {
         background: #FFF;
 }
 
+.topWords {
+    margin: 40px auto;
+    width: 80%;
+    font-size: 22px;
+
+}
+
 #modal_trigger {
         margin: 40px auto;
         width: 200px;
@@ -388,7 +395,7 @@ h2{font-size: 1.5em; margin: 8px 0}
     float: left;
     overflow: hidden;
 }
-.post p{text-transform: lowercase;}
+.post p{font-size: 20;}
 
 /* voting style */
 .vote-span{
@@ -462,8 +469,8 @@ h6.h6-divider {
     color: #000;
     font-size: 80%;
     line-height: 16px;
-    margin-top: 4%;
-    margin-bottom: 1%;
+    margin-top: 0%;
+    margin-bottom: 0%;
 }
 
 h6.h6-divider span {
@@ -476,6 +483,7 @@ h6.h6-divider span {
 }
 
 .tabs{
+    font-size: 18px;
     width: 90%;
     margin-right: auto;
     margin-left: auto;
