@@ -1,6 +1,5 @@
 var postIDs = 1;
 
-
 $(document).ready(function() {
 
 
@@ -10,12 +9,15 @@ $(document).ready(function() {
         $.get('/logout');
     });  
 
+
+
     $("a#cancel-btn").click(function(){
         $("#lean_overlay").trigger("click");
     });
 
     $("a#submit-btn").click(function() {
         var msgContent = $("#vmsg").val();
+        //var markupStr = $('#summernote').summernote('code');
         var newMsg = {
             postID: postIDs,
             content: msgContent,
@@ -26,14 +28,34 @@ $(document).ready(function() {
 
         $.post('/newPost', newMsg);
         displayPost(postIDs);
+        $('#summernote').summernote('destory');
         $("#lean_overlay").trigger("click");
         postIDs++;
+
     });
+
+
 
     $("#modal_trigger").leanModal({
         top : 200,
         overlay : 0.6,
         closeButton: ".modal_close",
+    });
+
+    $('#summernote').summernote({
+      toolbar: [
+       ['style', ['bold', 'italic', 'underline', 'clear']],
+       ['font', ['strikethrough','superscript', 'subscript']],
+       ['fontsize', ['fontsize']],
+       ['color', ['color']],
+       ['para', ['ul', 'ol', 'paragraph','height']],
+       ['insert', ['link', 'table']]
+     ],
+     height: 350,
+     maxHeight: 350,
+     focus: true,
+     disableDragAndDrop: true,
+     placeholder : "type here!"
     });
 
     $("#all_tab").click(function(){
@@ -57,6 +79,9 @@ $(document).ready(function() {
         $(".user_login").show();
         return false;
     });
+
+    
+
 
 });
 
