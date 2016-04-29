@@ -3,83 +3,196 @@ var postIDs = 1;
 
 $(document).ready(function() {
 
+
+    displayPrevPosts(0);    //0 = all    
+
     $("div#logout").click(function() {
         $.get('/logout');
+    });  
+
+    $("a#cancel-btn").click(function(){
+        $("#lean_overlay").trigger("click");
     });
 
-    $("div#form1").append(
-        $("<h3/>").text("Submit Post"), $("<form/>", {}).append(
-            $("<textarea/>", {
-                rows: '5px',
-                width: '100%',
-                type: 'text',
-                id: 'vmsg',
-                name: 'msg',
-                placeholder: 'Enter Post Here'
-            })
-        )
-    );
-
-    displayPrevPosts();
-
-    $('.vote').click(function() {
-        console.log("here");
-        
-
-    });
-
-    $("div#submit-btn").click(function() {
-
+    $("a#submit-btn").click(function() {
         var msgContent = $("#vmsg").val();
-
         var newMsg = {
             postID: postIDs,
             content: msgContent,
             display: true,
-            score: 0
+            score: 0,
+            categories: 0
         };
 
-
-        var testPost = $.post('/newPost', newMsg);
+        $.post('/newPost', newMsg);
         displayPost(postIDs);
+        $("#lean_overlay").trigger("click");
         postIDs++;
+    });
+
+    $("#modal_trigger").leanModal({
+        top : 200,
+        overlay : 0.6,
+        closeButton: ".modal_close",
+    });
+
+    $("#all_tab").click(function(){
+        deletePosts();
+        displayPrevPosts(0);
+    });
+
+    $("#pending_tab").click(function(){
+        deletePosts();
+        displayPrevPosts(1);
+    });
+
+    $("#completed_tab").click(function(){
+        deletePosts();
+        displayPrevPosts(2);
+    });
+
+    // Calling Login Form
+    $("#login_form").click(function () {
+        $(".social_login").hide();
+        $(".user_login").show();
+        return false;
     });
 
 });
 
 $(document).on('click', ".fa.fa-chevron-up", function() {
     var postID = $(this).attr('data-id');
-    $.get('/vote', {
-                postID: postID,
-                vote: 1
-            }, function(data, status) {
-                console.log(data + ", " + status);
-            });
+    var hasUpvoted = $(this).attr('data-b') === "true";
+    var hasDownvoted = $("#d" + postID).attr('data-b') === "true";
+    console.log(hasUpvoted);
+    console.log(hasDownvoted);
+    if (!hasUpvoted) {
+        if (hasDownvoted) {
+            
+            //Increment score client side
+            var score = Number($(this).attr('data-score')) + 1;
+            
+            //Increment score server side
+            $.get('/upvote', {
+                postID: postID
+            }, function(data, status) {});
+            $.get('/upvote', {
+                postID: postID
+            }, function(data, status) {});
+            
+            console.log($("i#d" + postID));
+            $("i#d" + postID).replaceWith("<i id=\"d " + postID + "\" data-b = \"false\" class=\"fa fa-chevron-down\" data-id=\"" + postID + "\" style=\"color:#000\"></i></div></div>");
+            $(this).replaceWith("<i id=\"u" + postID + "\" data-b = \"true\" class=\"fa fa-chevron-up\" data-id=\"" + postID + "\" style=\"color:#0F0\"></i></div></div>");
+
+        } else {
+            var score = Number($(this).attr('data-score')) + 1;
+            $.get('/upvote', {
+                postID: postID
+            }, function(data, status) {});
+            $(this).replaceWith("<i id=\"u" + postID + "\" data-b =     \"true\" class=\"fa fa-chevron-up\" data-id=\"" + postID + "\" style=\"color:#0F0\"></i></div></div>");
+        }
+
+        $("div#" + postID).replaceWith("<div class=\"vote-score\" id=\"" + postID + "\">" + score + "</div>");
+    }
 });
 
 $(document).on('click', ".fa.fa-chevron-down", function() {
     var postID = $(this).attr('data-id');
-    $.get('/vote', {
-                postID: postID,
-                vote: -1
-            }, function(data, status) {
-                console.log(data + ", " + status);
-            });
-});
+    var ele = $("#u" + postID);
+    var hasUpvoted = $("#u" + postID).attr('data-b') === "true";
+    var hasDownvoted = $(this).attr('data-b') === "true";
+    console.log(hasUpvoted);
+    console.log(hasDownvoted);
+    console.log($(this));
+    if (!hasDownvoted) {
+        if (hasUpvoted) {
+            var score = Number($(this).attr('data-score')) - 1;
+            $.get('/downvote', {
+                postID: postID
+            }, function(data, status) {});
+            $.get('/downvote', {
+                postID: postID
+            }, function(data, status) {});
+            console.log($("i#u" + postID));
+            $("i#u" + postID).replaceWith("<i id=\"u" + postID + "\" data-b = \"false\" class=\"fa fa-chevron-up\" data-id=\"" + postID + "\" style=\"color:#000\"></i></div></div>");
+            $(this).replaceWith("<i id=\"d" + postID + "\" data-b = \"true\" class=\"fa fa-chevron-down\" data-id=\"" + postID + "\" style=\"color:#F00\"></i></div></div>");
 
-function displayPrevPosts() {
+        } else {
+            var score = Number($(this).attr('data-score')) - 1;
+            $.get('/downvote', {
+                postID: postID
+            }, function(data, status) {});
+            $(this).replaceWith("<i id=\"d" + postID + "\" data-b = \"true\" class=\"fa fa-chevron-down\" data-id=\"" + postID + "\" style=\"color:#F00\"></i></div></div>");
+        }
+
+        $("div#" + postID).replaceWith("<div class=\"vote-score\" id=\"" + postID + "\">" + score + "</div>");
+    }
+})
+
+function deletePosts() {
+    $("div#wrap").html("");
+}
+
+function appendPost(data) {
+
+    var iconString;
+
+    if($.inArray(1, data.categories) != -1) {
+        iconString = [
+            '<div class="vote-icon">',
+                '<div class="vote">',
+                    '<i class="fa fa-spinner"></i>',
+                '</div>',
+            '</div>'
+        ].join("\n");
+    }
+    if ($.inArray(2, data.categories) != -1) {
+        iconString = [
+            '<div class="vote-icon">',
+                '<div class="vote">',
+                    '<i class="fa fa-check"></i>',
+                '</div>',
+            '</div>'
+        ].join("\n");
+    }
+
+    var html = [
+        '<div class ="item">',
+            '<div class="vote-span">',
+                '<div class="vote" id="upvote" data-action="up" title="Vote up">',
+                    '<i id="u' + data.postID + '" data-b="false" class="fa fa-chevron-up" data-score="' + data.score + '" data-id="' + data.postID + '"></i>',
+                '</div>',
+                '<div class="vote-score" id="' + data.postID + '">',
+                    data.score,
+                '</div>',
+                '<div class="vote" id="downvote"  data-action="down" title="Vote down">',
+                    '<i id="d' + data.postID + '" data-b="false" class="fa fa-chevron-down" data-score="' + data.score + '" data-id="' + data.postID + '"></i>',
+                '</div>',
+            '</div>',
+            '<div id="posts">',
+                '<div class="post" id="postIn">',
+                    '<p>',
+                        data.content,
+                    '</p>',
+            '</div>',
+            iconString,
+            '</div>',
+        '</div>'                                            
+    ].join("\n");
+
+    $("div#wrap").append(html);
+
+}
+
+function displayPrevPosts(cat) {
     $.get('/getPost', {}, function(data, status) {
         var highestPost = 0;
         console.log(data);
-        postIDs = data.postID;
+        postIDs = data.length;
         for (var x = 0; x < data.length; x++) {
-            if (data[x].postID >= highestPost) {
-                highestPost = data[x].postID + 1;
-            }
-
-            $("div#wrap").append("<div class=\"item\" >" + "<div class=\"vote-span\">" + "<div class=\"vote\" id=\"upvote\" data-action=\"up\" title=\"Vote up\">" + "<i id=\"u" + data[x].postID + "\" data-b=\"false\" class=\"fa fa-chevron-up\" data-score=\"" + data[x].score + "\" data-id=\"" + data[x].postID + "\"></i></div>" + "<div class=\"vote-score\" id=\"" + data[x].postID + "\">" + data[x].score + "</div>" + "<div class=\"vote\" id=\"downvote\"  data-action=\"down\" title=\"Vote down\">" + "<i id=\"d" + data[x].postID + "\" data-b=\"false\" class=\"fa fa-chevron-down\" data-score=\"" + data[x].score + "\" data-id=\"" + data[x].postID + "\"></i></div></div>" + "<div id=\"posts\">" + "<div class=\"post\" id=\"postIn\">" + "<p>" + data[x].content + " Score: " + data[x].score + "</p></div></div></div>");
+            if ($.inArray(cat, data[x].categories) != -1)
+                appendPost(data[x]);
         }
-        postIDs = highestPost;
     });
 }
 
@@ -89,10 +202,6 @@ function displayPost(pID) {
         postID: pID
     }, function(data, status) {
         console.log(data);
-
-        $("div#wrap").append("<div class=\"item\" >" + "<div class=\"vote-span\">" + "<div class=\"vote\" id=\"upvote\" data-id=\"" + pID + "\" data-action=\"up\" title=\"Vote up\">" + "<i class=\"fa fa-chevron-up\"></i></div>" + "<div class=\"vote-score\">" + data[x].score + "</div>" + "<div class=\"vote\" id=\"downvote\" data-id=\"" + data[x].postID + "\" data-action=\"down\" title=\"Vote down\">" + "<i class=\"fa fa-chevron-down\"></i></div></div>" + "<div id=\"posts\">" + "<div class=\"post\" id=\"postIn\">" + "<p>" + data[x].content + " Score: " + data[x].score + "</p></div></div></div>");
-
-        $("div#wrap").append("<div class=\"item\" >" + "<div class=\"vote-span\">" + "<div class=\"vote\" data-action=\"up\" title=\"Vote up\">" + "<i class=\"fa fa-chevron-up\"></i></div>" + "<div class=\"vote-score\">" + data.score + "</div>" + "<div class=\"vote\" data-action=\"down\" title=\"Vote down\">" + "<i class=\"fa fa-chevron-down\"></i></div></div>" + "<div id=\"posts\">" + "<div class=\"post\" id=\"postIn\">" + "<p>Content: " + data.content + " Score: " + data.score + "</p></div></div></div>");
+        appendPost(data);
     });
-
 }

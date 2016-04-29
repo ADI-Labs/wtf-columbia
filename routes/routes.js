@@ -77,13 +77,15 @@ module.exports = function (app, passport){
 		var newContent = req.body.content;
 		var newDisplay = req.body.display;
 		var newScore = req.body.score;
+		var categories = req.body.categories;
 
 		var newMsg = new Post({
     		postID: newPostID,
     		content: newContent,
     		display: newDisplay,
     		score: newScore,
-    		voted: 0
+    		voted: 0,
+    		categories: categories
     	});
 
     	newMsg.save(function(err) {
@@ -99,8 +101,32 @@ module.exports = function (app, passport){
 		var voted = Post.findOne({ postID: req.query.postID}).voted;
 
 		//case upvote
-		//if (vote == 1 && )
-		//if (voted)
+		if (vote == 1 && voted != 1) {
+			Post.update({postID: postID},
+				{
+					$inc: {score: 1},
+					voted: 1
+				},
+				function(err, numAffected){
+					if (err) return handleError(err);
+				});
+			res.status(201);
+			res.send('Upvote success');
+		} else if (vote == -1 && voted != -1) {
+			Post.update({postID: postID},
+				{
+					$inc: {score: -1},
+					voted: -1
+				},
+				function(err, numAffected){
+					if (err) return handleError(err);
+				});			
+			res.status(201);
+			res.send('Downvote success');
+		} else {
+			res.status(400);
+			res.send('Voting failed');
+		}
 	});
 
 	app.get('/upvote', function(req, res){
