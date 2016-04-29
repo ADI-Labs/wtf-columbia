@@ -3,7 +3,9 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     mongoose = require('mongoose');
     //drive = require('../drive/drive');
 
-//checks if email is valid, returns boolean
+
+// checks if email is valid, returns boolean
+
 function validateEmail(email) {
     var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
     if (re.test(email)) {
@@ -55,21 +57,29 @@ module.exports = function(config, passport) {
                     } else {
                         // if the user isnt in our database & is columbia; create a new user
                         if (validity){
-                            var newUser = new User();
+                        var newUser = new User();
 
-                            // set all of the relevant information
-                            newUser._id = profile.id;
-                            newUser.name = profile.displayName;
-                            newUser.email = profile.emails[0].value;
-                            console.log(newUser);
+                        // set all of the relevant information
+                        newUser._id = profile.id;
+                        newUser.username = profile.displayName;
+                        newUser.email = profile.emails[0].value;
 
-                            // save the user
-                            newUser.save(function(err) {
-                                if (err)
-                                    throw(err);
-                                return done(null, newUser);
-                                console.log('User created!');
-                            }); 
+                        console.log(newUser);
+
+                        // save the user
+                        newUser.save(function(err) {
+                            if (err)
+                                throw(err);
+                            console.log(newUser.email);
+                            return done(null, newUser);
+                            console.log('User created!');
+                        }); 
+                        }
+
+                        else
+                        {
+                            return done(null, null);
+                        }
                     }
                 }
             });
