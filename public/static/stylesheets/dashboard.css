@@ -1,0 +1,500 @@
+/* general styling */
+
+
+/* Importing Google Webfonts */
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic);
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    -o-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+body{
+    font-family: 'Source Sans Pro', sans-serif;
+    text-transform: inherit;
+    color: #333;
+    background: #fefefe;
+    width: 100%;
+}
+
+.header{
+    max-width: 1000px;
+    padding: 0.75rem;
+    margin:auto;
+    font: 24px;
+    color: #7534F7;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    height: auto;
+}
+
+.menu{
+    margin-top: 14px;
+    padding: 0.75rem;
+
+}
+
+.menu.align-right {
+    list-style-type: none;
+    
+}
+
+.menu.align-right>li {
+    float: right;
+    font-size: 16px;
+
+}
+
+a{
+    text-decoration: none;
+    color: #00abff;
+}
+
+a:hover{
+    text-decoration: none;
+    color: #00abff;
+}
+
+HTML  CSS  JS  Result
+Edit on 
+body {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 14px;
+        color: #666;
+}
+
+h1 {
+        text-align: center;
+        margin-bottom: 0;
+        margin-top: 60px;
+}
+
+#lean_overlay {
+        position: fixed;
+        z-index: 100;
+        top: 0px;
+        left: 0px;
+        height: 100%;
+        width: 100%;
+        background: #000;
+        display: none;
+}
+
+.popupContainer {
+        position: absolute;
+        width: 60%;
+        height: auto;
+        left: 45%;
+        top: 60px;
+        background: #FFF;
+}
+
+.topWords {
+    margin: 40px auto;
+    width: 80%;
+    font-size: 22px;
+
+}
+
+#modal_trigger {
+        margin: 40px auto;
+        width: 200px;
+        display: block;
+        border: 1px solid #DDD;
+        border-radius: 4px;
+}
+
+.btn {
+        padding: 10px 20px;
+        background: #F4F4F2;
+}
+
+.btn_red {
+        background: #ED6347;
+        color: #FFF;
+}
+
+.btn:hover {
+        background: #E4E4E2;
+}
+
+.btn_red:hover {
+        background: #C12B05;
+}
+
+a.btn {
+        color: #666;
+        text-align: center;
+        text-decoration: none;
+}
+
+a.btn_red {
+        color: #FFF;
+}
+
+.one_half {
+        width: 50%;
+        display: block;
+        float: left;
+}
+
+.one_half.last {
+        width: 45%;
+        margin-left: 5%;
+}
+/* Popup Styles*/
+
+.popupHeader {
+        font-size: 16px;
+        text-transform: uppercase;
+}
+
+.popupHeader {
+        background: #F4F4F2;
+        position: relative;
+        padding: 10px 20px;
+        border-bottom: 1px solid #DDD;
+        font-weight: bold;
+}
+
+.popupHeader .modal_close {
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 10px 15px;
+        background: #E4E4E2;
+        cursor: pointer;
+        color: #aaa;
+        font-size: 16px;
+}
+
+.popupBody {
+        padding: 20px;
+}
+/* Social Login Form */
+
+.social_login {display:none;}
+
+.social_login .social_box {
+        display: block;
+        clear: both;
+        padding: 10px;
+        margin-bottom: 10px;
+        background: #F4F4F2;
+        overflow: hidden;
+}
+
+.social_login .icon {
+        display: block;
+        width: 10px;
+        padding: 5px 10px;
+        margin-right: 10px;
+        float: left;
+        color: #FFF;
+        font-size: 16px;
+        text-align: center;
+}
+
+.social_login .fb .icon {
+        background: #3B5998;
+}
+
+.social_login .google .icon {
+        background: #DD4B39;
+}
+
+.social_login .icon_title {
+        display: block;
+        padding: 5px 0;
+        float: left;
+        font-weight: bold;
+        font-size: 16px;
+        color: #777;
+}
+
+.social_login .social_box:hover {
+        background: #E4E4E2;
+}
+
+.centeredText {
+        text-align: center;
+        margin: 20px 0;
+        clear: both;
+        overflow: hidden;
+        text-transform: uppercase;
+}
+
+.action_btns {
+        clear: both;
+        overflow: hidden;
+}
+
+.action_btns a {
+        display: block;
+}
+/* User Login Form */
+
+.user_login {
+        
+}
+
+.user_login label {
+        display: block;
+        margin-bottom: 5px;
+}
+
+.user_login input[type="text"],
+.user_login input[type="email"],
+.user_login input[type="password"] {
+        display: block;
+        width: 90%;
+        padding: 10px;
+        border: 1px solid #DDD;
+        color: #666;
+}
+
+.user_login input[type="checkbox"] {
+        float: left;
+        margin-right: 5px;
+}
+
+.user_login input[type="checkbox"]+label {
+        float: left;
+}
+
+.user_login .checkbox {
+        margin-bottom: 10px;
+        clear: both;
+        overflow: hidden;
+}
+
+.forgot_password {
+        display: block;
+        margin: 20px 0 10px;
+        clear: both;
+        overflow: hidden;
+        text-decoration: none;
+        color: #ED6347;
+}
+/* User Register Form */
+
+.user_register {
+        display: none;
+}
+
+.user_register label {
+        display: block;
+        margin-bottom: 5px;
+}
+
+.user_register input[type="text"],
+.user_register input[type="email"],
+.user_register input[type="password"] {
+        display: block;
+        width: 90%;
+        padding: 10px;
+        border: 1px solid #DDD;
+        color: #666;
+}
+
+.user_register input[type="checkbox"] {
+        float: left;
+        margin-right: 5px;
+}
+
+.user_register input[type="checkbox"]+label {
+        float: left;
+}
+
+.user_register .checkbox {
+        margin-bottom: 10px;
+        clear: both;
+        overflow: hidden;
+}
+
+
+
+
+
+ul.submit-form{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+
+ul.submit-form>li{
+    display:inline;
+}
+
+.submit-wrapper{
+    height: auto;
+    padding: 2% 20% ;
+    background:#f8f8fb;
+}
+
+textarea{
+    resize: none;
+    border-radius: 10px;
+    width: 100%;
+    height: 15%;
+    padding: 5px;
+}
+
+.form {
+    width: 75%;
+    margin: 15px auto;
+    resize: none;
+    padding: 15px 10px;
+    background: white;
+    border: 2px solid #DBDBDB;
+    border-radius: 10px;
+}
+
+.wrap{
+    width: 90%;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px 10px;
+    background: white;
+    border: 2px solid #DBDBDB;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+a{ text-decoration: none; color: #333}
+h1{
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 2.8em;
+    text-align: center;
+    margin: 25px 0;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+h2{font-size: 1.5em; margin: 8px 0}
+.item{
+    clear: both;
+    margin:0;
+    padding: 5px;
+    overflow: hidden;
+    border-top: 1px solid #DBDBDB;
+}
+.item:last-child{border-bottom:1px solid #DBDBDB}
+.item:hover{background: #f9f9f9}
+.post{
+    width: auto;
+    float: left;
+    overflow: hidden;
+}
+.post p{font-size: 20;}
+
+/* voting style */
+.vote-span{
+    width: 60px;
+    float: left;
+    margin: 5px 0;
+}
+
+.vote-icon{
+    width: 60px;
+    float:right;
+    margin-top: 35px;
+}
+
+.vote, .vote-score{
+    clear: both;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    text-align: center;
+    color: #333;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+.vote-score{cursor: text}
+
+
+
+h6 {
+    font-size: 80%;
+    text-transform: uppercase;
+    color: #3d3f47;
+    letter-spacing: 1.1px;
+    text-align: center;
+}
+
+h6.h6-divider::before {
+    margin: auto;
+    content: '';
+    display: block;
+    height: 1px;
+    background: #000;
+    position: absolute;
+    top: 45%;
+    right: 0px;
+    left: 0px;
+    max-width: 1000px;
+}
+
+h6.h6-divider:before {
+    margin: auto;
+    content: '';
+    display: block;
+    height: 1px;
+    background: #000;
+    position: absolute;
+    top: 45%;
+    right: 0px;
+    left: 0px;
+    max-width: 1000px;
+}
+
+@media screen and (min-width: 64em)
+h6.h6-divider {
+    margin-bottom: 6%;
+}
+
+h6.h6-divider {
+    display: block;
+    text-transform: uppercase;
+    position: relative;
+    color: #000;
+    font-size: 80%;
+    line-height: 16px;
+    margin-top: 0%;
+    margin-bottom: 0%;
+}
+
+h6.h6-divider span {
+    width: auto;
+    margin: 0 auto;
+    padding: 0 10px;
+    background: #fefefe;
+    color: #000;
+    position: relative;
+}
+
+.tabs{
+    font-size: 18px;
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 15px;
+    padding-bottom: 0px;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: white;
+}
+
+.tabs>li{
+    display:inline;
+}

@@ -81,9 +81,8 @@ module.exports = function(config, passport) {
                             return done(null, null);
                         }
                     }
-                }
+                });
             });
+        }));
 
-        });
-    }));
 };
