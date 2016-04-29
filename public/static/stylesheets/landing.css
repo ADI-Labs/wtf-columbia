@@ -1,0 +1,20 @@
+body {
+	background-image: url(http://dz0zjhi21dz2t.cloudfront.net/media/84997/tour/1438018899645/1536_front.jpg);
+	background-size: cover;
+   background-repeat:no-repeat;
+}
+.signup {	
+	align-content: center;
+}
+#login {
+	align-content: center;
+	width: 100px;
+	height: 40px;
+	line-height: 40px;
+	background-color: #5EEEE6;
+	display: inline-block;
+	font-size: 15px;
+}
+#login:hover{
+	background-color: #4DC5BE;
+}

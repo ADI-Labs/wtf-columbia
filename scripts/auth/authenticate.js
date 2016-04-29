@@ -1,9 +1,11 @@
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     User = require('../models/User'),
     mongoose = require('mongoose');
-//drive = require('../drive/drive');
+    //drive = require('../drive/drive');
+
 
 // checks if email is valid, returns boolean
+
 function validateEmail(email) {
     var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
     if (re.test(email)) {
@@ -79,9 +81,9 @@ module.exports = function(config, passport) {
                             return done(null, null);
                         }
                     }
-                });
+                }
             });
 
-        }));
-
+        });
+    }));
 };
